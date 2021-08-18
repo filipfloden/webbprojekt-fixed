@@ -1,0 +1,38 @@
+<section class="page-section mt-4">
+    <div class="container">
+        {{#if isLoggedIn}}
+            {{#if dbError}}
+                <h1 class="text-secondary text-center">{{dbError}}</h1>
+            {{/if}}
+            {{#if uploadError}}
+                <h1 class="text-secondary text-center">{{uploadError}}</h1>
+            {{/if}}
+            {{#if fieldErrors}}
+                <ul>
+                    {{#each fieldErrors}}
+                        <li class="text-danger">
+                            {{this}}
+                        </li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+            <form id="create-project" class="m-3" method="post" enctype="multipart/form-data" action="/create-project/?_csrf={{csrf}}">
+                <div class="form-group">
+                    <label for="project-title">Project Title</label>
+                    <input required minlength="2" type="text" class="form-control" id="project-title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Project Description</label>
+                    <textarea required minlength="10" type="text" class="form-control textarea-portfolio" name="description" style="resize: none;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-image">Project Image</label>
+                    <input required type="file" class="form-control p-1" name="image">
+                </div>
+                <a href="/portfolio"><button class="btn btn-secondary" type="button">Cancel</button></a>
+                <button class="btn btn-primary" type="submit">Add project</button>
+                <input type="hidden" name="_csrf" value="{{csrf}}">
+            </form>
+        {{/if}}
+    </div>
+</section>

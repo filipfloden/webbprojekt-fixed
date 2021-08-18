@@ -1,0 +1,38 @@
+<section class="page-section mt-4">
+    <div class="container">
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        {{#if dbError}}
+            <h1 class="text-secondary text-center">{{dbError}}</h1>
+        {{/if}}
+        {{#if isLoggedIn}}
+            {{#if questions.length}}
+                    {{#each questions}}
+                        {{#if answer}}
+                            <form id="edit-question" class="m-3" method="post" action="/edit-question">
+                                <div class="form-group">
+                                    <label for="project-title"><h4>{{question}}</h4></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="question-answer">Edit Answer</label>
+                                    <textarea required minlength="5" type="text" class="form-control textarea-portfolio" id="edit-answer" name="answer" style="resize: none;">{{answer}}</textarea>
+                                </div>
+
+                                <a href="/faq"><button class="btn btn-secondary" type="button">Cancel</button></a>
+                                <button class="btn btn-primary" type="submit">Save Changes</button>
+                                <input type="hidden" name="id" value="{{id}}">
+                                <input type="hidden" name="_csrf"  value="{{../csrf}}">
+                            </form>
+                        {{/if}}
+                {{/each}}
+            {{/if}}
+        {{else}}
+        <div class="container text-center">
+            <h3>You need to be logged in to see this page</h3>
+        </div>
+        {{/if}}
+    </div>
+</section>

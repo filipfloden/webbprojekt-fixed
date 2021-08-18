@@ -1,0 +1,88 @@
+<section class="page-section" id="contact">
+    <div class="container">
+        <!-- Contact Section Heading-->
+        <div class="text-center">
+            <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACT</h2>
+        </div>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        {{#if isLoggedIn}}
+            {{#if dbError}}
+                <h1 class="text-secondary text-center">{{dbError}}</h1>
+            {{/if}}
+            {{#if fieldErrors}}
+                <ul>
+                    {{#each fieldErrors}}
+                        <li class="text-danger">
+                            {{this}}
+                        </li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+            {{#if contact.length}}
+                {{#each contact}}
+                    <form id="answer-message" class="m-3" method="post" action="/answer-message">
+                        <div class="form-group">
+                            <label for="contact-name"><h4>{{name}}</h4></label>
+                        </div>
+                        <div class="form-group">
+                            <label id="status"><h5>Status: {{status}}</h5></label>
+                        </div>
+                        <div class="form-group contact-distance">
+                            <label><h5>Message:</h5></label>
+                        </div>
+                        <div class="form-group contact-distance">
+                            <label><p>{{message}}</p></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-answer">Answer:</label>
+                            {{#if answer}}
+                                <p>{{answer}}</p>
+                            {{else}}
+                                <textarea required minlength="5" type="text" class="form-control textarea-portfolio" id="contact-answer" name="answer" style="resize: none;"></textarea>
+                            {{/if}}
+                        </div>
+
+                        <a href="/faq"><button class="btn btn-secondary" type="button">Cancel</button></a>
+                        <button class="btn btn-danger" name="btnID" value="delete" type="submit">Delete</button>
+                        {{#if answer}}
+                        {{else}}
+                            <button class="btn btn-primary" name="btnID" value="submit" type="submit">Submit answer</button>
+                        {{/if}}
+                        <input type="hidden" name="id" value="{{id}}">
+                        <input type="hidden" name="_csrf" value="{{../csrf}}">
+                    </form>
+                {{/each}}
+            {{/if}}
+        {{else}}
+            {{#if dbError}}
+                <h1 class="text-secondary text-center">{{dbError}}</h1>
+            {{/if}}
+            <!-- Contact Section Content-->
+            <form class="contact-form" action="/contact" method="post">
+                <div class="contact-item mb-4">
+                    <i class="fas fa-user icon-size"></i>
+                    <input required type="text" class=" p-1 contact-input" name="name" placeholder="Enter your name..">
+                </div>
+                <div class="contact-item mb-4">
+                    <i class="far fa-envelope icon-size"></i>
+                    <input required type="email" class=" p-1 contact-input" name="email" placeholder="Enter your email..">
+                </div>
+                <div class="contact-item mb-4">
+                    <i class="fas fa-mobile-alt icon-size"></i>
+                    <input required type="tel" class=" p-1 contact-input" name="phone" placeholder="Enter your phone number..">
+                </div>
+                <div class="contact-item mb-4">
+                    <i class="fas fa-comment"></i>
+                    <input required type="text" class="p-1 contact-input" name="message" placeholder="Enter a message..">
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+                <input type="hidden" name="_csrf" value="{{csrf}}">
+            </form>
+        {{/if}}
+    </div>
+</section>

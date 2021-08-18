@@ -1,0 +1,23 @@
+<section class="page-section mt-4">
+    {{#if dbError}}
+        <h1 class="text-secondary text-center">{{dbError}}</h1>
+    {{/if}}
+    <div class="container">
+        {{#if fieldError}}
+            <ul>
+                <li class="text-danger">
+                    {{fieldError}}
+                </li>
+            </ul>
+        {{/if}}
+        <form id="ask-question" class="m-3" method="post" action="/ask-question">
+            <div class="form-group">
+                <label for="question">Question</label>
+                <input required minlength="5" type="text" class="form-control" id="question" name="title">
+            </div>
+            <a href="/faq"><button class="btn btn-secondary" type="button">Cancel</button></a>
+            <button class="btn btn-primary" type="submit">Send Question</button>
+            <input type="hidden" name="_csrf" value="{{csrf}}">
+        </form>
+    </div>
+</section>
